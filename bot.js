@@ -13,6 +13,16 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log(`HTTP Server läuft auf Port ${PORT}`);
+  
+  // Keep-Alive: Ping sich selbst alle 4 Minuten, um Sleep zu verhindern
+  setInterval(() => {
+    const http = require('http');
+    http.get(`http://localhost:${PORT}/`, (res) => {
+      console.log(`Keep-Alive Ping: ${res.statusCode}`);
+    }).on('error', (err) => {
+      console.log('Keep-Alive Fehler:', err.message);
+    });
+  }, 240000); // 4 Minuten
 });
 
 const WARNING_MESSAGE = `🚨 *Public Service Announcement* 🚨
