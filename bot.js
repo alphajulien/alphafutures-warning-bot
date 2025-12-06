@@ -1,7 +1,19 @@
 const TelegramBot = require('node-telegram-bot-api');
+const http = require('http');
 
 const token = process.env.TELEGRAM_BOT_TOKEN || '8212740282:AAGd7cqoJtZowjzuxDYJ9ZQa7lR0R-1TaOk';
 const bot = new TelegramBot(token, { polling: true });
+
+// HTTP Server für Koyeb Web Service (health check)
+const PORT = process.env.PORT || 8000;
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('AlphaFutures Warning Bot is running!\n');
+});
+
+server.listen(PORT, () => {
+  console.log(`HTTP Server läuft auf Port ${PORT}`);
+});
 
 const WARNING_MESSAGE = `🚨 *Public Service Announcement* 🚨
 
