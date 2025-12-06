@@ -23,27 +23,24 @@ Bitte prüft sofort eure DMs. Dort findet ihr die vollständige Aufarbeitung, di
 
 Bleibt wachsam und validiert jede Information kritisch.
 
-@alphaponzi`;
+@alphaponzi
 
-const VIDEO_URL = 'https://cdn-cf-east.streamable.com/video/mp4/cjdik2.mp4?Expires=1765310437549&Key-Pair-Id=APKAIEYUVEN4EVB2OKEQ&Signature=LKnlqAuZLKJcIIXxkKJBf24AjE8B5dM~0a3gbCjY3beeTqMFkdfIljOpdjaNzfjhYj5CNTJn44fjoPxyZH652aQ0CJDI9FaodW4B4SAI3~JHJN-74hNPyaHS~LxQE3Bhd2jgvjEUtBEJ5VJW4UooNbp5ZnLkyLzbtbwoLBb76ZYLYB2mpiBfrvfHVvv4AduTo3T0--CnRlhXnP~WG74j7P-kQ8aZeQP6n7tB~I1ssUreZvat0HoWWRZtfh7-SAtLDQssMjjE966nlu09sJLK6HdNleev~OYhRpruT1pAW6AX3XyrhHzSa4hTZpHpPSFtUp0Ff2K8d5KD5SIaWd0SnQ__';
+🎥 Video-Beweis: streamable.com/cjdik2`;
 
 // Sende Warnung an alle Nutzer, die den Bot starten
 bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   
   try {
-    // Sende Video mit Warnung
-    await bot.sendVideo(chatId, VIDEO_URL, {
-      caption: WARNING_MESSAGE,
-      parse_mode: 'Markdown'
+    // Sende nur Text mit Video-Link (einfacher und zuverlässiger)
+    await bot.sendMessage(chatId, WARNING_MESSAGE, { 
+      parse_mode: 'Markdown',
+      disable_web_page_preview: false
     });
     
-    console.log(`Warnung gesendet an User: ${chatId}`);
+    console.log(`✅ Warnung gesendet an User: ${chatId}`);
   } catch (error) {
-    console.error('Fehler beim Senden:', error);
-    
-    // Fallback: Nur Text senden, falls Video fehlschlägt
-    await bot.sendMessage(chatId, WARNING_MESSAGE, { parse_mode: 'Markdown' });
+    console.error('❌ Fehler beim Senden:', error.message);
   }
 });
 
@@ -54,15 +51,14 @@ bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   
   try {
-    await bot.sendVideo(chatId, VIDEO_URL, {
-      caption: WARNING_MESSAGE,
-      parse_mode: 'Markdown'
+    await bot.sendMessage(chatId, WARNING_MESSAGE, { 
+      parse_mode: 'Markdown',
+      disable_web_page_preview: false
     });
     
-    console.log(`Warnung gesendet an User: ${chatId}`);
+    console.log(`✅ Warnung gesendet an User: ${chatId}`);
   } catch (error) {
-    console.error('Fehler beim Senden:', error);
-    await bot.sendMessage(chatId, WARNING_MESSAGE, { parse_mode: 'Markdown' });
+    console.error('❌ Fehler beim Senden:', error.message);
   }
 });
 
